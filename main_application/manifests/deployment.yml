@@ -1,0 +1,29 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: timestamp-hash-dep
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: timestamp-hash
+  template:
+    metadata:
+      labels:
+        app: timestamp-hash
+    spec:
+      volumes:
+        - name: shared-timestamp
+          persistentVolumeClaim:
+            claimName: main-claim
+      containers:
+        - name: timestamp-writer
+          image: kriegmachine/timestamp_writer
+          volumeMounts:
+            - name: shared-timestamp
+              mountPath: /files/
+        - name: timestamp-display
+          image: kriegmachine/timestamp_display
+          volumeMounts:
+            - name: shared-timestamp
+              mountPath: /files/

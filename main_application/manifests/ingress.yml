@@ -1,0 +1,16 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: dwk-material-ingress
+spec:
+  rules:
+  - http:
+      paths:
+      - path: /
+        backend:
+          serviceName: timestamp-hash-svc
+          servicePort: 2345
+      - path: /pingpong/
+        backend:
+            serviceName: pingpong-svc
+            servicePort: 2346
