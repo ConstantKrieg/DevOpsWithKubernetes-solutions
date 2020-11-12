@@ -51,7 +51,29 @@ Server started on port 5000
  * Debugger is active!
  * Debugger PIN: 138-891-241
 ```
+## 1.03
 
+manifests/deployment.yml for the main_application
+
+```yml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: print-string-dep
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: print-string
+  template:
+    metadata:
+      labels:
+        app: print-string
+    spec:
+      containers:
+        - name: print-string
+          image: kriegmachine/print_string
+```
 ## 1.04
 
 manifets/deployment.yml
