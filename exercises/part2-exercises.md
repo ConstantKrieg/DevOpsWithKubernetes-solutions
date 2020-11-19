@@ -396,6 +396,8 @@ def get_todos():
 ...
 ```
 
+![2_08](https://github.com/ConstantKrieg/DevOpsWithKubernetes-solutions/blob/master/exercises/images/2_08.jpg?raw=true)
+
 ## 2.09
 
 project/manifests/wikipedia-todo-generator/generation-job.yml
@@ -436,3 +438,11 @@ with engine.connect() as conn:
     stmt = text("INSERT INTO todo (content) VALUES (:content)")
     conn.execute(stmt, {'content': f"Remember to read {resp.url}"})
 ```
+After running the CronJob manually with Lens, the project looked like this
+
+![2_09](https://github.com/ConstantKrieg/DevOpsWithKubernetes-solutions/blob/master/exercises/images/2_09.jpg?raw=true)
+
+## 2.10 
+My API uses flask which has request logging built in. Here are the logs from Grafana. The API returns a 500 error if a todo with a length larger than 140 characters is sent to it. 
+
+![grafana](https://github.com/ConstantKrieg/DevOpsWithKubernetes-solutions/blob/master/exercises/images/2_10.jpg?raw=true)
