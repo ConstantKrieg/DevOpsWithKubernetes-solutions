@@ -1,0 +1,25 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: kflask-dep
+  namespace: project
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: kflask
+  template:
+    metadata:
+      labels:
+        app: kflask
+    spec:
+      volumes:
+        - name: shared-images
+          persistentVolumeClaim:
+            claimName: project-claim
+      containers:
+        - name: kflask
+          image: kriegmachine/kflask
+          volumeMounts:
+            - name: shared-images
+              mountPath: /images/

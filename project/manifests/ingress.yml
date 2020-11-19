@@ -2,6 +2,7 @@ apiVersion: extensions/v1beta1
 kind: Ingress
 metadata:
   name: dwk-material-ingress
+  namespace: project
 spec:
   rules:
   - http:
@@ -10,3 +11,7 @@ spec:
         backend:
           serviceName: kflask-svc
           servicePort: 2345
+      - path: /api/
+        backend:
+          serviceName: kflask-api-svc
+          servicePort: 80

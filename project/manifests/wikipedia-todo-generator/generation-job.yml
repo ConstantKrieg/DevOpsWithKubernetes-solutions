@@ -1,0 +1,31 @@
+apiVersion: batch/v1beta1
+kind: CronJob
+metadata:
+  name: generate-wikipedia-todo
+  namespace: project
+spec:
+  schedule: "0 8 * * *"
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          containers:
+          - name: wtg
+            image: kriegmachine/wtg
+            env:
+            - name: POSTGRES_DB
+              valueFrom:
+                secretKeyRef:
+                  name: secret
+                  key: dbname
+            - name: POSTGRES_USER
+              valueFrom:
+                secretKeyRef:
+                  name: secret
+                  key: username
+            - name: POSTGRES_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: secret
+                  key: password
+          restartPolicy: OnFailure

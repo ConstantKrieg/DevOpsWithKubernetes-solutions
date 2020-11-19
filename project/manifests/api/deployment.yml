@@ -1,0 +1,34 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: kflask-api-dep
+  namespace: project
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: kflask-api
+  template:
+    metadata:
+      labels:
+        app: kflask-api
+    spec:
+      containers:
+        - name: kflask-api
+          image: kriegmachine/kflask-api
+          env:
+            - name: POSTGRES_DB
+              valueFrom:
+                secretKeyRef:
+                  name: secret
+                  key: dbname
+            - name: POSTGRES_USER
+              valueFrom:
+                secretKeyRef:
+                  name: secret
+                  key: username
+            - name: POSTGRES_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: secret
+                  key: password

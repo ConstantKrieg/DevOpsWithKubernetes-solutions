@@ -1,0 +1,78 @@
+<html>
+    <head>
+        <title>{{ title }}</title>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    </head>
+    <body>
+        <h1>Hello, World!</h1>
+
+        <img src="/daily_image" alt="Daily image" style="width:200px;height:200px;">
+    
+        <br/>
+
+        <input type="text" id="newTODO">
+        <button onclick="handleNewTODO()">Press</button>
+
+        <div id="errorBox"></div>
+
+
+        <ul id="todoList">
+            
+        </ul>
+    </body>
+
+    <script>
+        const handleNewTODO = () => {
+            const newTODO = $("#newTODO").val();
+
+            if (newTODO && newTODO.length > 1 && newTODO.length <= 140) {
+                $.ajax({
+                    url: 'http://localhost:8081/api/todo/',
+                    type: "POST",
+                    data: JSON.stringify({ 'todo': newTODO }),
+                    contentType: "application/json; charset=utf-8",
+                    success: (data, status) => {
+                        console.log(data, status);
+                        if (status === "success") {
+                            $('#todoList').append( '<li>' + data.todo + '</li>' );
+                            $('#todoList').val() = '';
+                        } 
+                        else {
+                            showErrorMessage();
+                        }
+                    },
+                });
+            }
+            else {
+                showErrorMessage();
+            }
+        }
+
+        const showErrorMessage = () => {
+            $('#errorBox').append('<label id="error"> Something went wrong </label>');
+
+            setTimeout(() => {
+                $('#error').remove();
+            }, 5000);
+        }
+
+        const loadTodos = () => {
+            console.log('IN LOAD TODOS');
+            $.get('http://localhost:8081/api/todo/', (data, status) => {
+                console.log(data, status);
+
+                if (status === "success") {
+
+                    data.todos.forEach( todo => {
+                        $('#todoList').append( '<li>' + todo['content'] + '</li>' );
+                    })
+                }
+                else {
+                    showErrorMessage();
+                }
+            })
+        }
+
+        $(document).ready(() => loadTodos());
+    </script>
+</html>

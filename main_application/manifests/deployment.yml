@@ -2,6 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: timestamp-hash-dep
+  namespace: main-app
 spec:
   replicas: 1
   selector:
@@ -16,6 +17,9 @@ spec:
         - name: shared-timestamp
           persistentVolumeClaim:
             claimName: main-claim
+        - name: config
+          configMap:
+           name: message-conf
       containers:
         - name: timestamp-writer
           image: kriegmachine/timestamp_writer
@@ -27,3 +31,12 @@ spec:
           volumeMounts:
             - name: shared-timestamp
               mountPath: /files/
+            - name: config
+              mountPath: /conf/
+              readOnly: true
+          env:
+            - name: MESSAGE
+              valueFrom:
+                configMapKeyRef:
+                  name: message-conf
+                  key: MESSAGE

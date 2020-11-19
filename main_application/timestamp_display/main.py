@@ -3,7 +3,8 @@ import time
 import random
 import datetime
 from flask import Flask
-
+import requests
+import os
 
 app = Flask(__name__)
 
@@ -13,14 +14,22 @@ s = ''.join(random.choice(letters) for i in range(25))
 @app.route("/")
 def get_string():
     timestamp = ''
-    pongs = ''
     with open('/files/timestamp.txt', 'r') as f:
         timestamp = f.read()
 
-    with open('/files/pongs.txt', 'r') as pf:
-        pongs = pf.read()
+    resp = requests.get('http://pingpong-svc/pingpong/count')
     
-    return f"{timestamp} {s} \n Ping / Pongs: {pongs}"
+    message = os.environ['MESSAGE']
+    html = f"""<!DOCTYPE HTML>
+          <html>
+            <head></head>
+            <body>
+                <p>{message}</p> <br/>
+                <p>{timestamp} {s}</p> <br/>
+                <p>Ping / Pongs: {resp.text}</p>
+            </body>
+          </html>"""
+    return html
 
 if __name__ == "__main__":
     host = '0.0.0.0'

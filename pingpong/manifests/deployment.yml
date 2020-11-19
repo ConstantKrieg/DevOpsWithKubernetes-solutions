@@ -2,6 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: pingpong
+  namespace: main-app
 spec:
   replicas: 1
   selector:
@@ -12,13 +13,22 @@ spec:
       labels:
         app: pingpong
     spec:
-      volumes:
-        - name: shared-timestamp
-          persistentVolumeClaim:
-            claimName: main-claim
       containers:
         - name: pingpong
           image: kriegmachine/pingpong
-          volumeMounts:
-            - name: shared-timestamp
-              mountPath: /files/
+          env:
+            - name: POSTGRES_DB
+              valueFrom:
+                secretKeyRef:
+                  name: postgres-secret
+                  key: dbname
+            - name: POSTGRES_USER
+              valueFrom:
+                secretKeyRef:
+                  name: postgres-secret
+                  key: username
+            - name: POSTGRES_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: postgres-secret
+                  key: password
