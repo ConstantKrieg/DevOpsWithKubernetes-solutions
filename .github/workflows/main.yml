@@ -28,13 +28,13 @@ jobs:
     - run: gcloud container clusters get-credentials "$GKE_CLUSTER" --zone "$GKE_ZONE"
 
     - name: Create api image name and tag
-      run: echo "::set-env name=API_IMAGE_WITH_TAG::gcr.io/${{ secrets.GKE_PROJECT }}/$API_IMAGE:${GITHUB_REF#refs/heads/}-$GITHUB_SHA"
+      run: echo "{API_IMAGE_WITH_TAG}={gcr.io/${{ secrets.GKE_PROJECT }}/$API_IMAGE:${GITHUB_REF#refs/heads/}-$GITHUB_SHA} >> $GITHUB_ENV"
 
     - name: Create backend image name and tag
-      run: echo "::set-env name=BACKEND_IMAGE_WITH_TAG::gcr.io/${{ secrets.GKE_PROJECT }}/$BACKEND_IMAGE:${GITHUB_REF#refs/heads/}-$GITHUB_SHA"
+      run: echo "{BACKEND_IMAGE_WITH_TAG}={gcr.io/${{ secrets.GKE_PROJECT }}/$BACKEND_IMAGE:${GITHUB_REF#refs/heads/}-$GITHUB_SHA} >> $GITHUB_ENV"
 
     - name: Create wtg image name and tag
-      run: echo "::set-env name=WTG_IMAGE_WITH_TAG::gcr.io/${{ secrets.GKE_PROJECT }}/$WTG_IMAGE:${GITHUB_REF#refs/heads/}-$GITHUB_SHA"
+      run: echo "{WTG_IMAGE_WITH_TAG}={gcr.io/${{ secrets.GKE_PROJECT }}/$WTG_IMAGE:${GITHUB_REF#refs/heads/}-$GITHUB_SHA} >> $GITHUB_ENV"
 
     - name: Build API
       run: docker build --tag "$API_IMAGE_WITH_TAG" ./project/api/
@@ -46,7 +46,8 @@ jobs:
       run: docker build --tag "$WTG_IMAGE_WITH_TAG" ./project/wikipedia-todo-generator/
 
     - name: Publish
-      run: docker push "$API_IMAGE_WITH_TAG"
+      run: |- 
+        docker push "$API_IMAGE_WITH_TAG"
 
     - name: Set up Kustomize
       run: |-
