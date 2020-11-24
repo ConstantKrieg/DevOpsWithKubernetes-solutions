@@ -1,7 +1,7 @@
 apiVersion: extensions/v1beta1
 kind: Ingress
 metadata:
-  name: dwk-material-ingress
+  name: backend-ingress
   namespace: project
 spec:
   rules:
