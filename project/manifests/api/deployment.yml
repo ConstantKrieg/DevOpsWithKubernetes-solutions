@@ -15,7 +15,7 @@ spec:
     spec:
       containers:
         - name: kflask-api
-          image: kriegmachine/kflask-api
+          image: PROJECT/API
           env:
             - name: POSTGRES_DB
               valueFrom:

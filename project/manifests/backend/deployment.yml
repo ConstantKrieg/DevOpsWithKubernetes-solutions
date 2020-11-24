@@ -19,7 +19,7 @@ spec:
             claimName: project-claim
       containers:
         - name: kflask
-          image: kriegmachine/kflask
+          image: PROJECT/BACKEND
           volumeMounts:
             - name: shared-images
               mountPath: /images/

@@ -11,7 +11,7 @@ spec:
         spec:
           containers:
           - name: wtg
-            image: kriegmachine/wtg
+            image: PROJECT/GENERATOR
             env:
             - name: POSTGRES_DB
               valueFrom:

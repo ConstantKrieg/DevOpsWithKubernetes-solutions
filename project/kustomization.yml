@@ -1,0 +1,27 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+resources:
+- manifests/api/deployment.yml
+- manifests/api/service.yml
+
+- manifests/backend/deployment.yml
+- manifests/backend/service.yml
+
+- manifests/database/deployment.yml
+- manifests/database/service.yml
+
+- manifests/wikipedia-todo-generator/generation-job.yml
+
+
+images:
+  - name: PROJECT/API
+    newName: kriegmachine/kflask-api
+  
+  - name: PROJECT/BACKEND
+    newName: kriegmachine/kflask
+
+  - name: DATABASE
+    newName: postgres:13.0
+
+  - name: PROJECT/GENERATOR
+    newName: kriegmachine/wtg
