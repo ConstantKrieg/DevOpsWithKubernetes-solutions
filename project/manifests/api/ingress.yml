@@ -7,10 +7,6 @@ spec:
   rules:
   - http:
       paths:
-      - path: /
-        backend:
-          serviceName: kflask-svc
-          servicePort: 2345
       - path: /api/
         backend:
           serviceName: kflask-api-svc

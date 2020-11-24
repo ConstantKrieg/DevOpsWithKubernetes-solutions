@@ -1,11 +1,18 @@
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 resources:
+
+- manifests/secret.yml
+- manifests/volume/persistentvolumeclaim.yml
 - manifests/api/deployment.yml
 - manifests/api/service.yml
+- manifests/api/ingress.yml
+
 
 - manifests/backend/deployment.yml
 - manifests/backend/service.yml
+- manifests/backend/ingress.yml
+
 
 - manifests/database/deployment.yml
 - manifests/database/service.yml

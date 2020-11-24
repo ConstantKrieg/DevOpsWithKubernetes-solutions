@@ -4,7 +4,7 @@ metadata:
   name: kflask-svc
   namespace: project
 spec:
-  type: ClusterIP
+  type: NodePort
   selector:
     app: kflask # This is the app as declared in the deployment.
   ports:
