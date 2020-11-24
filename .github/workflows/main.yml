@@ -6,9 +6,9 @@ on:
 env:
   GKE_CLUSTER: dwk-cluster
   GKE_ZONE: europe-north1-b
-  API_IMAGE: kriegmachine/kflask-api
-  BACKEND_IMAGE: kriegmachine/kflask
-  WTG_IMAGE: kriegmachine/wtg
+  API_IMAGE: kflask-api
+  BACKEND_IMAGE: kflask
+  WTG_IMAGE: wtg
 
 
 jobs:
@@ -49,12 +49,12 @@ jobs:
     - name: Create namespace for project
       run:  kubectl create namespace project
 
+    - name: Change into project
+      run: cd project
     - name: Deploy
       run: |-
         ./kustomize edit set image PROJECT/API_IMAGE=gcr.io/${{ secrets.GKE_PROJECT_ID }}/$API_IMAGE:$GITHUB_SHA
         ./kustomize edit set image PROJECT/BACKEND_IMAGE=gcr.io/${{ secrets.GKE_PROJECT_ID }}/$BACKEND_IMAGE:$GITHUB_SHA
         ./kustomize edit set image PROJECT/GENERATOR=gcr.io/${{ secrets.GKE_PROJECT_ID }}/$WTG_IMAGE:$GITHUB_SHA
         ./kustomize edit set image DATABASE=postgres:13.0
-
-
-        kubectl apply -k project/
+        kubectl apply -k .
