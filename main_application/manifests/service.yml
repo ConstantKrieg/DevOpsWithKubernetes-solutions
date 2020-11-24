@@ -4,10 +4,10 @@ metadata:
   name: timestamp-hash-svc
   namespace: main-app
 spec:
-  type: ClusterIP
+  type: NodePort
   selector:
     app: timestamp-hash
   ports:
-    - port: 2345
+    - port: 80
       protocol: TCP
       targetPort: 5000

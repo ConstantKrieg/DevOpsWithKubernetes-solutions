@@ -12,7 +12,11 @@ password = os.environ['POSTGRES_PASSWORD']
 engine = create_engine(f"postgresql://{user}:{password}@postgres-svc.main-app:5432/{db}")
 
 
-@app.route('/pingpong/')
+@app.route('/')
+def default_route():
+    return "OK"
+
+@app.route('/pingpong')
 def pong():
     count = get_pong_count()
     with engine.connect() as conn:

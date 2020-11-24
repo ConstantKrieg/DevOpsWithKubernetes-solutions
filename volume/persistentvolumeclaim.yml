@@ -4,7 +4,7 @@ metadata:
   name: main-claim
   namespace: main-app
 spec:
-  storageClassName: manual
+  #storageClassName: manual
   accessModes:
     - ReadWriteOnce
   resources:

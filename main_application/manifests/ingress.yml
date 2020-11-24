@@ -10,8 +10,8 @@ spec:
       - path: /
         backend:
           serviceName: timestamp-hash-svc
-          servicePort: 2345
-      - path: /pingpong/
+          servicePort: 80
+      - path: /pingpong
         backend:
-            serviceName: pingpong-svc
-            servicePort: 80
+          serviceName: pingpong-svc
+          servicePort: 80
