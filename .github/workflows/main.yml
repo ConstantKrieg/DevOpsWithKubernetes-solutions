@@ -23,7 +23,7 @@ jobs:
     - uses: GoogleCloudPlatform/github-actions/setup-gcloud@master
       with:
         service_account_key: ${{ secrets.GKE_SA_KEY }}
-        project_id: ${{ secrets.GKE_PROJECT_ID }}
+        project_id: ${{ secrets.GKE_PROJECT_ID  }}
 
     - run: gcloud --quiet auth configure-docker
     - run: gcloud container clusters get-credentials "$GKE_CLUSTER" --zone "$GKE_ZONE"
@@ -31,15 +31,15 @@ jobs:
    
     - name: Build container
       run: |-
-        docker build --tag "gcr.io/$PROJECT_ID/$API_IMAGE:$GITHUB_SHA" project/api/
-        docker build --tag "gcr.io/$PROJECT_ID/$BACKEND_IMAGE:$GITHUB_SHA" project/backend/
-        docker build --tag "gcr.io/$PROJECT_ID/$WTG_IMAGE:$GITHUB_SHA" project/wikipedia-todo-generator/
+        docker build --tag "gcr.io/${{ secrets.GKE_PROJECT_ID }}/$API_IMAGE:$GITHUB_SHA" project/api/
+        docker build --tag "gcr.io/${{ secrets.GKE_PROJECT_ID }}/$BACKEND_IMAGE:$GITHUB_SHA" project/backend/
+        docker build --tag "gcr.io/${{ secrets.GKE_PROJECT_ID }}/$WTG_IMAGE:$GITHUB_SHA" project/wikipedia-todo-generator/
 
     - name: Publish
       run: |- 
-        docker push "gcr.io/$PROJECT_ID/$API_IMAGE:$GITHUB_SHA"
-        docker push "gcr.io/$PROJECT_ID/$BACKEND_IMAGE:$GITHUB_SHA"
-        docker push "gcr.io/$PROJECT_ID/$WTG_IMAGE:$GITHUB_SHA"
+        docker push "gcr.io/${{ secrets.GKE_PROJECT_ID }}/$API_IMAGE:$GITHUB_SHA"
+        docker push "gcr.io/${{ secrets.GKE_PROJECT_ID }}/$BACKEND_IMAGE:$GITHUB_SHA"
+        docker push "gcr.io/${{ secrets.GKE_PROJECT_ID }}/$WTG_IMAGE:$GITHUB_SHA"
 
     - name: Set up Kustomize
       run: |-
@@ -51,9 +51,9 @@ jobs:
 
     - name: Deploy
       run: |-
-        ./kustomize edit set image PROJECT/API_IMAGE=gcr.io/$PROJECT_ID/$API_IMAGE:$GITHUB_SHA
-        ./kustomize edit set image PROJECT/BACKEND_IMAGE=gcr.io/$PROJECT_ID/$BACKEND_IMAGE:$GITHUB_SHA
-        ./kustomize edit set image PROJECT/GENERATOR=gcr.io/$PROJECT_ID/$WTG_IMAGE:$GITHUB_SHA
+        ./kustomize edit set image PROJECT/API_IMAGE=gcr.io/${{ secrets.GKE_PROJECT_ID }}/$API_IMAGE:$GITHUB_SHA
+        ./kustomize edit set image PROJECT/BACKEND_IMAGE=gcr.io/${{ secrets.GKE_PROJECT_ID }}/$BACKEND_IMAGE:$GITHUB_SHA
+        ./kustomize edit set image PROJECT/GENERATOR=gcr.io/${{ secrets.GKE_PROJECT_ID }}/$WTG_IMAGE:$GITHUB_SHA
         ./kustomize edit set image DATABASE=postgres:13.0
 
 
