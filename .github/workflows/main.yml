@@ -10,9 +10,9 @@ env:
   BACKEND_IMAGE: kflask
   WTG_IMAGE: wtg
 
-  API_IMAGE_WITH_TAG: gcr.io/${{ secrets.GKE_PROJECT }}/kflask-api:${GITHUB_REF#refs/heads/}-$GITHUB_SHA
-  BACKEND_IMAGE_WITH_TAG: gcr.io/${{ secrets.GKE_PROJECT }}/kflask:${GITHUB_REF#refs/heads/}-$GITHUB_SHA
-  WTG_IMAGE_WITH_TAG: gcr.io/${{ secrets.GKE_PROJECT }}/wtg:${GITHUB_REF#refs/heads/}-$GITHUB_SHA
+  API_IMAGE_WITH_TAG: gcr.io/${{ secrets.GKE_PROJECT }}/kflask-api
+  BACKEND_IMAGE_WITH_TAG: gcr.io/${{ secrets.GKE_PROJECT }}/kflask
+  WTG_IMAGE_WITH_TAG: gcr.io/${{ secrets.GKE_PROJECT }}/wtg
 
 
 jobs:
