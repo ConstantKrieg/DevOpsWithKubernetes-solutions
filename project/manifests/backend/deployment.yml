@@ -22,4 +22,4 @@ spec:
           image: PROJECT/BACKEND
           volumeMounts:
             - name: shared-images
-              mountPath: /images/
+              mountPath: /images/ # aa
