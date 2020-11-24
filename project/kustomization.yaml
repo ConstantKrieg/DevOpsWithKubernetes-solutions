@@ -3,7 +3,7 @@ kind: Kustomization
 resources:
 
 - manifests/secret.yml
-- manifests/volumes/persistentvolumeclaim.yml
+- manifests/volumes/projectvolumeclaim.yml
 - manifests/api/deployment.yml
 - manifests/api/service.yml
 - manifests/api/ingress.yml
