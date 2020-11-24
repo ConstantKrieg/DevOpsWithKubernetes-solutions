@@ -27,8 +27,5 @@ images:
   - name: PROJECT/BACKEND
     newName: kriegmachine/kflask
 
-  - name: DATABASE
-    newName: postgres:13.0
-
   - name: PROJECT/GENERATOR
     newName: kriegmachine/wtg

@@ -53,5 +53,4 @@ jobs:
         ./kustomize edit set image PROJECT/API_IMAGE=gcr.io/${{ secrets.GKE_PROJECT_ID }}/$API_IMAGE:$GITHUB_SHA
         ./kustomize edit set image PROJECT/BACKEND_IMAGE=gcr.io/${{ secrets.GKE_PROJECT_ID }}/$BACKEND_IMAGE:$GITHUB_SHA
         ./kustomize edit set image PROJECT/GENERATOR=gcr.io/${{ secrets.GKE_PROJECT_ID }}/$WTG_IMAGE:$GITHUB_SHA
-        ./kustomize edit set image DATABASE=postgres:13.0
         kubectl apply -k .
