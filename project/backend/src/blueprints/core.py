@@ -21,8 +21,7 @@ def test_bp():
     else:
         todos = r.json()
 
-
-    return render_template('index.html', title="Kubernetes Project", todos=todos)
+    return render_template('index.html', title="Kubernetes Project", todos=todos['todos'])
 
 @bp.route('/new_todo', methods=(['POST']))
 def post_todo():
@@ -35,7 +34,15 @@ def post_todo():
         abort(r.status_code)
     
     return r.json()
+
+@bp.route('/todos', methods=(['GET']))
+def get_todos():
+    r = requests.get('http://kflask-api-svc.project/api/todo/')
+
+    if r.status_code != 200:
+        return json.dumps({'todos': []})
     
+    return r.json()
 
 @bp.route('/daily_image', methods=(['GET']))
 def image_endpoint():

@@ -43,6 +43,7 @@ def get_single_todo(todo_id):
 @bp.route('/api/todo/', methods=(['POST']))
 def add_todo():
 
+    print("ADDING TODO", flush=True)
     content = request.json
 
     todo = content["todo"]

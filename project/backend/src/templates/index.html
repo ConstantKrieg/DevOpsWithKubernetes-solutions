@@ -17,9 +17,6 @@
 
 
         <ul id="todoList">
-            {% for todo in todos %}
-            <li> {{ todo.todo }}</li>
-            {% endfor %}
         </ul>
     </body>
 
@@ -62,7 +59,7 @@
 
         const loadTodos = () => {
             console.log('IN LOAD TODOS');
-            $.get('/api/todo/', (data, status) => {
+            $.get('/todos', (data, status) => {
                 console.log(data, status);
 
                 if (status === "success") {
@@ -77,6 +74,6 @@
             })
         }
 
-        //$(document).ready(() => loadTodos());
+        $(document).ready(() => loadTodos());
     </script>
 </html>
