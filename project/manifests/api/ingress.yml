@@ -2,6 +2,7 @@ apiVersion: extensions/v1beta1
 kind: Ingress
 metadata:
   name: api-ingress
+  namespace: project
   annotations:
     nginx.ingress.kubernetes.io/use-regex: "true"
 
