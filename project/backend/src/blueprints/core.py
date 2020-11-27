@@ -45,6 +45,7 @@ def get_image():
     global IMAGE_PATH
 
     d = date.today()
+    print('In newer image')
     
     filepath = f"{d.year}_{d.month}_{d.day}.jpg"
     
