@@ -30,7 +30,7 @@
 
             if (newTODO && newTODO.length > 1 && newTODO.length <= 140) {
                 $.ajax({
-                    url: '/new_todo/',
+                    url: '/new_todo',
                     type: "POST",
                     data: JSON.stringify({ 'todo': newTODO }),
                     contentType: "application/json; charset=utf-8",

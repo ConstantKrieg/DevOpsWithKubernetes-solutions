@@ -17,28 +17,28 @@ def test_bp():
     r = requests.get('http://kflask-api-svc.project/api/todo/')
     print("IN NEW IMAGE")
     if r.status_code != 200:
-        print("Error when loading todos", r.status_code)
+        print("Error when loading todos", r.status_code, flush=True)
         todos = []
     else:
-        todos = json.loads(r.json())
+        todos = r.json()
 
 
     return render_template('index.html', title="Kubernetes Project", todos=todos)
 
-@bp.route('/new_todo/', methods=(['POST']))
+@bp.route('/new_todo', methods=(['POST']))
 def post_todo():
     content = request.json
     todo = content["todo"]
 
     r = requests.post('http://kflask-api-svc.project/api/todo/', json={'todo': todo})
-
+    print(r, flush=True)
     if r.status_code != 200:
         abort(r.status_code)
     
     return r.json()
     
 
-@bp.route('/daily_image/')
+@bp.route('/daily_image', methods=(['GET']))
 def image_endpoint():
     filepath = get_image()
     d = date.today()

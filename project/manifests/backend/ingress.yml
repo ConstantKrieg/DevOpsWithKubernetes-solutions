@@ -11,6 +11,10 @@ spec:
         backend:
           serviceName: kflask-svc
           servicePort: 80
+      - path: /daily_image
+        backend:
+          serviceName: kflask-svc
+          servicePort: 80
       - path: /api
         backend:
           serviceName: kflask-api-svc

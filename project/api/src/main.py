@@ -14,6 +14,9 @@ def create_app():
     from blueprints.todo import config
     config(app)
     
+    @app.route('/')
+    def healtCheck():
+        return "OK"
 
     return app
 
@@ -27,7 +30,7 @@ def init_db():
             id SERIAL PRIMARY KEY,
             content varchar ( 140 )
         )""")
-
+    
     with engine.connect() as conn:
         conn.execute(stmt)
     
