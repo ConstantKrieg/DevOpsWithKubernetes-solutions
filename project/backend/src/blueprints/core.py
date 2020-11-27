@@ -16,7 +16,11 @@ bp = Blueprint('core', __name__)
 def test_bp():
     r = requests.get('http://kflask-api-svc.project/api/todo/')
     print("IN NEW IMAGE")
-    todos = json.loads(r.json)
+    if r.status_code != 200:
+        print("Error when loading todos", r.status_code)
+        todos = []
+    else:
+        todos = json.loads(r.json())
 
 
     return render_template('index.html', title="Kubernetes Project", todos=todos)
@@ -31,7 +35,7 @@ def post_todo():
     if r.status_code != 200:
         abort(r.status_code)
     
-    return r.json
+    return r.json()
     
 
 @bp.route('/daily_image/')
