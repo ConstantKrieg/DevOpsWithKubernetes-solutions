@@ -27,7 +27,7 @@
 
             if (newTODO && newTODO.length > 1 && newTODO.length <= 140) {
                 $.ajax({
-                    url: 'http://localhost:8081/api/todo/',
+                    url: '/api/todo/',
                     type: "POST",
                     data: JSON.stringify({ 'todo': newTODO }),
                     contentType: "application/json; charset=utf-8",
@@ -58,7 +58,7 @@
 
         const loadTodos = () => {
             console.log('IN LOAD TODOS');
-            $.get('http://localhost:8081/api/todo/', (data, status) => {
+            $.get('/api/todo/', (data, status) => {
                 console.log(data, status);
 
                 if (status === "success") {
