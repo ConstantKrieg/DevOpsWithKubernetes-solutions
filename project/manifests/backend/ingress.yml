@@ -4,16 +4,12 @@ metadata:
   name: backend-ingress
   namespace: project
   annotations:
-    nginx.ingress.kubernetes.io/rewrite-target: /
+    nginx.ingress.kubernetes.io/use-regex: "true"
 spec:
   rules:
   - http:
       paths:
-      - path: /*
-        backend:
-          serviceName: kflask-svc
-          servicePort: 80
-      - path: /daily_image
+      - path: /.*
         backend:
           serviceName: kflask-svc
           servicePort: 80

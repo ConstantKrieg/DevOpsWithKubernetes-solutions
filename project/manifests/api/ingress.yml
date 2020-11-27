@@ -2,12 +2,14 @@ apiVersion: extensions/v1beta1
 kind: Ingress
 metadata:
   name: api-ingress
-  namespace: project
+  annotations:
+    nginx.ingress.kubernetes.io/use-regex: "true"
+
 spec:
   rules:
   - http:
       paths:
-      - path: /api
+      - path: /api/.*
         backend:
           serviceName: kflask-api-svc
           servicePort: 80
