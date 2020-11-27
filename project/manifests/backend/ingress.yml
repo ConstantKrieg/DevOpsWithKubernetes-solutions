@@ -4,12 +4,12 @@ metadata:
   name: backend-ingress
   namespace: project
   annotations:
-    traefik.ingress.kubernetes.io/rule-type: "PathPrefixStrip"
+    nginx.ingress.kubernetes.io/rewrite-target: /
 spec:
   rules:
   - http:
       paths:
-      - path: /
+      - path: /*
         backend:
           serviceName: kflask-svc
           servicePort: 80
