@@ -11,7 +11,7 @@ spec:
         backend:
           serviceName: kflask-svc
           servicePort: 80
-      - path: /api/
+      - path: /api
         backend:
           serviceName: kflask-api-svc
           servicePort: 80
