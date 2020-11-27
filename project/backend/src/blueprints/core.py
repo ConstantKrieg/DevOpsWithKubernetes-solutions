@@ -1,11 +1,11 @@
-from flask import Blueprint, render_template, send_from_directory
+from flask import Blueprint, render_template, send_from_directory, request, abort, jsonify
 from datetime import date
 import os
 import glob
 import requests
 import shutil
 import sys
-
+import json
 
 
 IMAGE_PATH = '/images'
@@ -14,10 +14,27 @@ bp = Blueprint('core', __name__)
 
 @bp.route('/', methods=(['GET']))
 def test_bp():
-    return render_template('index.html', title="Kubernetes Project")
+    r = requests.get('http://kflask-api-svc.project/api/todo/')
+    print("IN NEW IMAGE")
+    todos = json.loads(r.json)
 
 
-@bp.route('/daily_image')
+    return render_template('index.html', title="Kubernetes Project", todos=todos)
+
+@bp.route('/new_todo/', methods=(['POST']))
+def post_todo():
+    content = request.json
+    todo = content["todo"]
+
+    r = requests.post('http://kflask-api-svc.project/api/todo/', json={'todo': todo})
+
+    if r.status_code != 200:
+        abort(r.status_code)
+    
+    return r.json
+    
+
+@bp.route('/daily_image/')
 def image_endpoint():
     filepath = get_image()
     d = date.today()

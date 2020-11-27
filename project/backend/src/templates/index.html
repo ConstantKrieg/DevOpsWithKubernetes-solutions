@@ -17,22 +17,26 @@
 
 
         <ul id="todoList">
-            
+            {% for todo in todos %}
+            <li> {{ todo.todo }}</li>
+            {% endfor %}
         </ul>
     </body>
 
     <script>
+        console.log("TEST");
         const handleNewTODO = () => {
             const newTODO = $("#newTODO").val();
 
             if (newTODO && newTODO.length > 1 && newTODO.length <= 140) {
                 $.ajax({
-                    url: '/api/todo/',
+                    url: '/new_todo/',
                     type: "POST",
                     data: JSON.stringify({ 'todo': newTODO }),
                     contentType: "application/json; charset=utf-8",
                     success: (data, status) => {
                         console.log(data, status);
+                        console
                         if (status === "success") {
                             $('#todoList').append( '<li>' + data.todo + '</li>' );
                             $('#todoList').val() = '';
@@ -73,6 +77,6 @@
             })
         }
 
-        $(document).ready(() => loadTodos());
+        //$(document).ready(() => loadTodos());
     </script>
 </html>
