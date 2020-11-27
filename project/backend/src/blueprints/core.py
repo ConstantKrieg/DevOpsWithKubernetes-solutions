@@ -15,7 +15,6 @@ bp = Blueprint('core', __name__)
 @bp.route('/', methods=(['GET']))
 def test_bp():
     r = requests.get('http://kflask-api-svc.project/api/todo/')
-    print("IN NEW IMAGE")
     if r.status_code != 200:
         print("Error when loading todos", r.status_code, flush=True)
         todos = []

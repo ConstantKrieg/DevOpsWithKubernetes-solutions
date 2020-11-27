@@ -3,13 +3,11 @@ kind: Ingress
 metadata:
   name: backend-ingress
   namespace: project
-  annotations:
-    nginx.ingress.kubernetes.io/use-regex: "true"
 spec:
   rules:
   - http:
       paths:
-      - path: /.*
+      - path: /
         backend:
           serviceName: kflask-svc
           servicePort: 80
