@@ -20,6 +20,10 @@ spec:
       containers:
         - name: kflask
           image: PROJECT/BACKEND
+          resources:
+            limits:
+              cpu: "250m"
+              memory: "100Mi"
           volumeMounts:
             - name: shared-images
               mountPath: /images/ # aa

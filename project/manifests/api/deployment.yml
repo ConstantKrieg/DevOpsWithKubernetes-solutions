@@ -16,6 +16,10 @@ spec:
       containers:
         - name: kflask-api
           image: PROJECT/API
+          resources:
+            limits:
+              cpu: "250m"
+              memory: "100Mi"
           env:
             - name: POSTGRES_DB
               valueFrom:
