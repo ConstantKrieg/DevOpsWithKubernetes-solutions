@@ -341,3 +341,10 @@ Backend has the same cofniguration.
 ## 3.09
 
 Since the applications are pretty similar in regards of how much CPU they utilize I just put the same value to main_app/pingpong
+
+
+## 3.10 
+
+I added manually a print-statement to adding todos that shows on the logs. For some reason the monitoring considered all the messages that came  from Flask's built in logging as errors even though they returned status 200.
+
+![logs](https://github.com/ConstantKrieg/DevOpsWithKubernetes-solutions/blob/master/exercises/images/3_10.jpg?raw=true)
