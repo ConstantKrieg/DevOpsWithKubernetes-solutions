@@ -14,7 +14,7 @@ bp = Blueprint('core', __name__)
 
 @bp.route('/', methods=(['GET']))
 def test_bp():
-    r = requests.get('http://kflask-api-svc.project/api/todo/')
+    r = requests.get('http://kflask-api-svc/api/todo/')
     if r.status_code != 200:
         print("Error when loading todos", r.status_code, flush=True)
         todos = []
@@ -28,7 +28,7 @@ def post_todo():
     content = request.json
     todo = content["todo"]
 
-    r = requests.post('http://kflask-api-svc.project/api/todo/', json={'todo': todo})
+    r = requests.post('http://kflask-api-svc/api/todo/', json={'todo': todo})
     print(r, flush=True)
     if r.status_code != 200:
         abort(r.status_code)
@@ -37,7 +37,7 @@ def post_todo():
 
 @bp.route('/todos', methods=(['GET']))
 def get_todos():
-    r = requests.get('http://kflask-api-svc.project/api/todo/')
+    r = requests.get('http://kflask-api-svc/api/todo/')
 
     if r.status_code != 200:
         return json.dumps({'todos': []})
