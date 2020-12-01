@@ -8,7 +8,7 @@ bp = Blueprint('todo', __name__)
 db = os.environ['POSTGRES_DB']
 user = os.environ['POSTGRES_USER']
 password = os.environ['POSTGRES_PASSWORD']
-engine = create_engine(f"postgresql://{user}:{password}@postgres-svc.project:5432/{db}")
+engine = create_engine(f"postgresql://{user}:{password}@postgres-svc:5432/{db}")
 
 
 def config(app):

@@ -23,11 +23,19 @@ spec:
       containers:
         - name: timestamp-writer
           image: kriegmachine/timestamp_writer
+          resources:
+            limits:
+              cpu: "250m"
+              memory: "100Mi"
           volumeMounts:
             - name: shared-timestamp
               mountPath: /files/
         - name: timestamp-display
           image: kriegmachine/timestamp_display
+          resources:
+            limits:
+              cpu: "250m"
+              memory: "100Mi"
           volumeMounts:
             - name: shared-timestamp
               mountPath: /files/

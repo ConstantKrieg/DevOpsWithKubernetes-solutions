@@ -304,3 +304,40 @@ jobs:
 ## 3.07
 
 I chose to continue with Postgres since I already have it configured and for the sake of learning it's better to do it manually. In an 'actual project' I'd probably choose a DBaaS since it takes the load of maintaining the database away from you.
+
+
+## 3.08
+
+Because the API isn't very heavy on the CPU I chose the threshold for a new replica to be 80% since that gives enough time for the system to handle increasing load before hitting 100%. I set the CPU usage to 25% since the API isn't very heavy on the CPU like I said. 
+
+I chose the same values for the backend since it basically functions as a proxy for the API.
+
+project/manifests/api/horizontalpodautoscaler.yml
+```yml
+apiVersion: autoscaling/v1
+kind: HorizontalPodAutoscaler
+metadata:
+  name: kflask-api-hpa
+spec:
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: kflask-api-dep
+  minReplicas: 1
+  maxReplicas: 3 
+  targetCPUUtilizationPercentage: 80
+```
+project/manifests/api/deployment.yml
+```yml
+...
+    resources:
+      limits:
+        cpu: "250m"
+        memory: "100Mi"
+...
+```
+Backend has the same cofniguration. 
+
+## 3.09
+
+Since the applications are pretty similar in regards of how much CPU they utilize I just put the same value to main_app/pingpong
