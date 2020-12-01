@@ -17,7 +17,11 @@ resources:
 - manifests/database/deployment.yml
 - manifests/database/service.yml
 
+- manifests/api/horizontalpodautoscaler.yml
+- manifests/backend/horizontalpodautoscaler.yml
+
 - manifests/wikipedia-todo-generator/generation-job.yml
+
 images:
   - name: PROJECT/API
     newName: kriegmachine/kflask-api
