@@ -4,3 +4,4 @@ The content of the repository changes as the course progresses. The relevant fil
 
  - [Part 1](https://github.com/ConstantKrieg/DevOpsWithKubernetes-solutions/blob/master/exercises/part1-exercises.md)
  - [Part 2](https://github.com/ConstantKrieg/DevOpsWithKubernetes-solutions/blob/master/exercises/part2-exercises.md)
+ - [Part 3](https://github.com/ConstantKrieg/DevOpsWithKubernetes-solutions/blob/master/exercises/part3-exercises.md)
