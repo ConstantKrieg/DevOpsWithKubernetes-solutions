@@ -12,6 +12,15 @@ IMAGE_PATH = '/images'
 
 bp = Blueprint('core', __name__)
 
+@bp.route('/health')
+def healthCheck():
+    resp = requests.get('http://kflask-api-svc/api/todo/')
+
+    if resp.status_code == 200:
+        return "OK"
+    else:
+        abort(500)
+
 @bp.route('/', methods=(['GET']))
 def test_bp():
     r = requests.get('http://kflask-api-svc/api/todo/')
@@ -29,7 +38,7 @@ def post_todo():
     todo = content["todo"]
 
     r = requests.post('http://kflask-api-svc/api/todo/', json={'todo': todo})
-    print(r, flush=True)
+    print(r, flush=True)  
     if r.status_code != 200:
         abort(r.status_code)
     

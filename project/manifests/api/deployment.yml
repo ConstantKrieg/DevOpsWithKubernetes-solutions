@@ -1,5 +1,5 @@
-apiVersion: apps/v1
-kind: Deployment
+apiVersion: argoproj.io/v1alpha1
+kind: Rollout
 metadata:
   name: kflask-api-dep
   namespace: project
@@ -8,6 +8,16 @@ spec:
   selector:
     matchLabels:
       app: kflask-api
+  strategy:
+    canary:
+      steps:
+      - setWeight: 50
+      - analysis:
+          templates:
+          - templateName: cpu-usage-rate
+      - pause:
+          duration: 10m
+      - setWeight: 50
   template:
     metadata:
       labels:
@@ -16,6 +26,12 @@ spec:
       containers:
         - name: kflask-api
           image: PROJECT/API
+          readinessProbe:
+            initialDelaySeconds: 10 # Initial delay until the readiness is tested
+            periodSeconds: 5 # How often to test
+            httpGet:
+               path: /health
+               port: 6000
           resources:
             limits:
               cpu: "250m"
@@ -36,3 +52,5 @@ spec:
                 secretKeyRef:
                   name: secret
                   key: password
+            - name: NATS_URL
+              value: nats://my-nats.default:4222

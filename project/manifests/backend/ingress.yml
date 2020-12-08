@@ -9,19 +9,11 @@ spec:
   rules:
   - http:
       paths:
-      - path: /*
+      - path: /
         backend:
           serviceName: kflask-svc
           servicePort: 80
-      - path: /daily_image
+      - path: /api/
         backend:
-          serviceName: kflask-svc
-          servicePort: 80
-      - path: /new_todo
-        backend:
-          serviceName: kflask-svc
-          servicePort: 80
-      - path: /todos
-        backend:
-          serviceName: kflask-svc
+          serviceName: kflask-api-svc
           servicePort: 80

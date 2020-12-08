@@ -2,6 +2,7 @@
     <head>
         <title>{{ title }}</title>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
     </head>
     <body>
         <h1>Hello, World!</h1>
@@ -21,7 +22,6 @@
     </body>
 
     <script>
-        console.log("TEST");
         const handleNewTODO = () => {
             const newTODO = $("#newTODO").val();
 
@@ -32,11 +32,13 @@
                     data: JSON.stringify({ 'todo': newTODO }),
                     contentType: "application/json; charset=utf-8",
                     success: (data, status) => {
-                        console.log(data, status);
-                        console
                         if (status === "success") {
-                            $('#todoList').append( '<li>' + data.todo + '</li>' );
-                            $('#todoList').val() = '';
+                            buttonHTML = "<button id=\"button_" + data.id + "\" type= \"button\" class=\"btn btn-info btn-xs\">Mark as done</button>"
+
+                            $('#todoList').append( '<li id=todo_' + data.id + '>' + data.todo + '</li>' + buttonHTML );
+                            $('#button_' + data.id).click(() => updateTodo(data.id));
+
+                            $('#newTODO').text = '';
                         } 
                         else {
                             showErrorMessage();
@@ -56,16 +58,46 @@
                 $('#error').remove();
             }, 5000);
         }
+        
+        const updateTodo = id => {
+
+            $.ajax({
+                    url: '/api/todo/' + id,
+                    type: "PUT",
+                    data: JSON.stringify({ 'todo': newTODO }),
+                    contentType: "application/json; charset=utf-8",
+                    success: (data, status) => {
+                        console.log(data, status);
+                        if (status === "success") {
+                            $("#button_" + id).remove();
+                            $("#todo_" + id).append(" <h6><small>Done</small> </h6>")
+                        } 
+                        else {
+                            showErrorMessage();
+                        }
+                    },
+                });
+        }
+
 
         const loadTodos = () => {
-            console.log('IN LOAD TODOS');
             $.get('/todos', (data, status) => {
-                console.log(data, status);
 
                 if (status === "success") {
 
                     data.todos.forEach( todo => {
-                        $('#todoList').append( '<li>' + todo['content'] + '</li>' );
+                        let buttonHTML = "";
+
+                        if (todo.done) {
+                            buttonHTML = " <h6><small>Done</small> </h6>"
+                        
+                        }
+                        else {
+                            buttonHTML = "<button id=\"button_" + todo.id + "\" type= \"button\" class=\"btn btn-info btn-xs\">Mark as done</button>"
+                        }
+
+                        $('#todoList').append( '<li id=todo_' + todo.id + '>' + todo['content'] + '</li>' + buttonHTML);
+                        $('#button_' + todo.id).click(() => updateTodo(todo.id));
                     })
                 }
                 else {

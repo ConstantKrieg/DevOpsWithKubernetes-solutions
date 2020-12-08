@@ -2,6 +2,7 @@ apiVersion: autoscaling/v1
 kind: HorizontalPodAutoscaler
 metadata:
   name: timestamp-hash-hpa
+  namespace: main-app
 spec:
   scaleTargetRef:
     apiVersion: apps/v1

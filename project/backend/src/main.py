@@ -1,4 +1,4 @@
-from flask import Flask
+from flask import Flask, abort
 import os
 import sys
 
@@ -7,10 +7,6 @@ def create_app():
     app.config.from_mapping(
         SECRET_KEY='dev',
     )
-
-    @app.route('/hello')
-    def hello():
-        return 'Hello, World!'
 
     from blueprints import core
     core.config(app)

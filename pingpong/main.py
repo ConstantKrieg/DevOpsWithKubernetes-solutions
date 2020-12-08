@@ -1,4 +1,4 @@
-from flask import Flask
+from flask import Flask, abort
 from sqlalchemy import Table, MetaData, create_engine
 import os
 
@@ -9,15 +9,34 @@ pong_counter = 0
 db = os.environ['POSTGRES_DB']
 user = os.environ['POSTGRES_USER']
 password = os.environ['POSTGRES_PASSWORD']
-engine = create_engine(f"postgresql://{user}:{password}@postgres-svc.main-app:5432/{db}")
+engine = None
 
 
 @app.route('/')
 def default_route():
     return "OK"
 
+
+@app.route('/health')
+def check_availability():
+    global engine
+    
+    try:
+        engine = create_engine(f"postgresql://{user}:{password}@postgres-svc.main-app:5432/{db}")
+        engine.connect()
+        init_db()
+        return "OK"
+    except:
+        print("Failed to create engine")
+        abort(500, "Database not up")
+
+
 @app.route('/pingpong')
 def pong():
+
+    if engine is None:
+        abort(503, "Database not up")
+    
     count = get_pong_count()
     with engine.connect() as conn:
         conn.execute("TRUNCATE pongs")
@@ -27,10 +46,20 @@ def pong():
 
 @app.route('/pingpong/count')
 def pong_count():
-    return str(get_pong_count())
+    
+    count = get_pong_count()
+
+    if count == -1:
+        abort(503, "Database not up")
+
+    return str(count)
 
 
 def get_pong_count():
+
+    if engine is None:
+        return -1
+
     with engine.connect() as conn:
         result = conn.execute("SELECT * FROM pongs")
         
@@ -46,7 +75,7 @@ def get_pong_count():
 
 
 def init_db():
-    print('Initializing db')
+    print('Initializing db', flush=True)
     
 
     with engine.connect() as conn:
@@ -63,5 +92,5 @@ def init_db():
 
 host = '0.0.0.0'
 port = 5000
-init_db()
+#init_db()
 app.run(host=host, port=port)

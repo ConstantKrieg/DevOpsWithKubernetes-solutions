@@ -32,6 +32,12 @@ spec:
               mountPath: /files/
         - name: timestamp-display
           image: kriegmachine/timestamp_display
+          readinessProbe:
+            initialDelaySeconds: 10 # Initial delay until the readiness is tested
+            periodSeconds: 5 # How often to test
+            httpGet:
+               path: /health
+               port: 5000
           resources:
             limits:
               cpu: "250m"

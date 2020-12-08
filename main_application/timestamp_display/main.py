@@ -2,7 +2,7 @@ import string
 import time
 import random
 import datetime
-from flask import Flask
+from flask import Flask, abort
 import requests
 import os
 
@@ -10,6 +10,16 @@ app = Flask(__name__)
 
 letters = string.ascii_letters
 s = ''.join(random.choice(letters) for i in range(25))
+
+@app.route("/health")
+def check_availability():
+    resp = requests.get('http://pingpong-svc/pingpong/count')
+
+    if (resp.status_code == 200):
+        return "OK"
+    else:
+        abort(500)
+
 
 @app.route("/")
 def get_string():

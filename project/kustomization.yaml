@@ -2,11 +2,13 @@ apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 resources:
 
-- manifests/secret.yml
+- manifests/sealedsecret.yml
+- manifests/broadcaster/sealedsecret.yml
+- manifests/analysistemplate.yml
 - manifests/volumes/projectvolumeclaim.yml
 - manifests/api/deployment.yml
 - manifests/api/service.yml
-- manifests/api/ingress.yml
+- manifests/broadcaster/deployment.yml
 
 
 - manifests/backend/deployment.yml
@@ -17,8 +19,6 @@ resources:
 - manifests/database/deployment.yml
 - manifests/database/service.yml
 
-- manifests/api/horizontalpodautoscaler.yml
-- manifests/backend/horizontalpodautoscaler.yml
 
 - manifests/wikipedia-todo-generator/generation-job.yml
 
@@ -31,3 +31,6 @@ images:
 
   - name: PROJECT/GENERATOR
     newName: kriegmachine/wtg
+
+  - name: PROJECT/BROADCASTER
+    newName: kriegmachine/kflask-broadcaster

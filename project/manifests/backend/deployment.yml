@@ -1,9 +1,21 @@
-apiVersion: apps/v1
-kind: Deployment
+apiVersion: argoproj.io/v1alpha1
+kind: Rollout
 metadata:
   name: kflask-dep
   namespace: project
 spec:
+  strategy:
+    canary:
+      steps:
+      - setWeight: 25
+      - analysis:
+          templates:
+            - templateName: cpu-usage-rate
+      - pause:
+          duration: 30s
+      - setWeight: 50
+      - pause:
+          duration: 30s
   replicas: 1
   selector:
     matchLabels:
@@ -20,6 +32,12 @@ spec:
       containers:
         - name: kflask
           image: PROJECT/BACKEND
+          readinessProbe:
+            initialDelaySeconds: 10 # Initial delay until the readiness is tested
+            periodSeconds: 5 # How often to test
+            httpGet:
+               path: /health
+               port: 5000
           resources:
             limits:
               cpu: "250m"
