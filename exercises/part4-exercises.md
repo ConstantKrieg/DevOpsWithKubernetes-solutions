@@ -123,7 +123,7 @@ Same thing is done in the `project/manifests/backend/deployment.yml`
 
 ## 4.05
 
-![IMG]()
+![IMG](https://github.com/ConstantKrieg/DevOpsWithKubernetes-solutions/blob/master/exercises/images/4_05.jpg?raw=true)
 
 ## 4.06
 
@@ -199,7 +199,8 @@ async def publish_message(status, todo, loop):
 
 Slack
 
+![slack_img](https://github.com/ConstantKrieg/DevOpsWithKubernetes-solutions/blob/master/exercises/images/4_06.jpg?raw=true)
 
 Six broadcasters were running in parallel:
 
-
+![lens_img](https://github.com/ConstantKrieg/DevOpsWithKubernetes-solutions/blob/master/exercises/images/4_06_2.jpg?raw=true)
