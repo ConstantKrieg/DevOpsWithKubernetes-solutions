@@ -4,7 +4,7 @@ metadata:
   name: broadcaster
   namespace: project
 spec:
-  replicas: 6
+  replicas: 1
   selector:
     matchLabels:
       app: broadcaster

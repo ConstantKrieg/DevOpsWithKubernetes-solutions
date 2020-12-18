@@ -1,0 +1,7 @@
+apiVersion: stable.dwk.stable.dwk/v1
+kind: Dummysite
+metadata:
+  name: ds
+  namespace: dummy
+spec:
+    website_url: www.google.com

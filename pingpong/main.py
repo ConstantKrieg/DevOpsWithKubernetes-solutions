@@ -33,6 +33,7 @@ def check_availability():
 
 @app.route('/pingpong')
 def pong():
+    global engine
 
     if engine is None:
         abort(503, "Database not up")
@@ -75,8 +76,9 @@ def get_pong_count():
 
 
 def init_db():
+    global engine
     print('Initializing db', flush=True)
-    
+    engine = create_engine(f"postgresql://{user}:{password}@postgres-svc.main-app:5432/{db}")
 
     with engine.connect() as conn:
         conn.execute("""CREATE TABLE IF NOT EXISTS pongs (
@@ -91,6 +93,10 @@ def init_db():
 
 
 host = '0.0.0.0'
-port = 5000
-#init_db()
-app.run(host=host, port=port)
+port = os.environ['PORT']
+init_db()
+
+if not port:
+    port = 5000
+
+app.run(host=host, port=int(port))

@@ -1,0 +1,7 @@
+domain: stable.dwk
+repo: stable.dwk
+resources:
+- group: stable.dwk
+  kind: Dummysite
+  version: v1
+version: "2"

@@ -1,0 +1,7 @@
+apiVersion: stable.dwk.stable.dwk/v1
+kind: Dummysite
+metadata:
+  name: dummysite-sample
+spec:
+  # Add fields here
+  foo: bar
