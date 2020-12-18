@@ -74,17 +74,17 @@ spec:
 
 And it showed on the pod list
 
--- Pod list image --
+![podlistimg](https://github.com/ConstantKrieg/DevOpsWithKubernetes-solutions/blob/master/exercises/images/5_01_1.jpg?raw=true)
 
 After applying a service and an ingress to the cluster a dummysite was shown 
 
--- dummysite image --
+![dsimg](https://github.com/ConstantKrieg/DevOpsWithKubernetes-solutions/blob/master/exercises/images/5_01_2.jpg?raw=true)
 
 ## 5.02
 
 I had to revert the deployments of the backend and api to standard deployments from Argo Rollouts. 
 
--- Linkerd image ---
+![linkerimg](https://github.com/ConstantKrieg/DevOpsWithKubernetes-solutions/blob/master/exercises/images/5_02.jpg?raw=true)
 
 
 ## 5.03
@@ -92,12 +92,12 @@ I had to revert the deployments of the backend and api to standard deployments f
 
 Linkerd in the end
 
--- 5_03 --
+![linkrdimg](https://github.com/ConstantKrieg/DevOpsWithKubernetes-solutions/blob/master/exercises/images/5_03.jpg?raw=true)
 
 
 Podinfo with the new header color
 
--- 5_03_2--
+![podinfo](https://github.com/ConstantKrieg/DevOpsWithKubernetes-solutions/blob/master/exercises/images/5_03_2.jpg?raw=true)
 
 After doing the final part of the task curling localhost:8080 responded with the pod-status like it supposed to,
 
@@ -188,7 +188,7 @@ pingpong-serverless-deployment-98dc6f78b-jgnz2   2/2     Running   0          11
 
 ## 5.06
 
--- image --
+![finalimg](https://github.com/ConstantKrieg/DevOpsWithKubernetes-solutions/blob/master/exercises/images/5_06.png?raw=true)
 
 #### Green means that we used them directly on this course
 
