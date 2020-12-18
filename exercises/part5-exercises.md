@@ -188,6 +188,8 @@ pingpong-serverless-deployment-98dc6f78b-jgnz2   2/2     Running   0          11
 
 ## 5.06
 
+-- image --
+
 #### Green means that we used them directly on this course
 
 - **Kubernetes** was the system that was the  subject of the course 
